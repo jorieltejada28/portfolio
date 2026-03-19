@@ -1,0 +1,35 @@
+<nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-indigo-100 shadow-sm">
+  <div class="max-w-7xl flex flex-wrap items-center justify-between mx-auto p-4">
+    <a routerLink="/" class="flex items-center space-x-2">
+      <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-200">
+        <span class="text-white font-bold text-xl">JD</span>
+      </div>
+      <span class="self-center text-xl font-bold whitespace-nowrap text-slate-900">
+        Dev<span class="text-indigo-600">Portfolio</span>
+      </span>
+    </a>
+
+    <button (click)="toggleMenu()" type="button" class="md:hidden p-2 text-slate-500 hover:bg-indigo-50 rounded-lg">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+      </svg>
+    </button>
+
+    <div [class.hidden]="isMenuHidden" class="w-full md:block md:w-auto">
+      <ul class="flex flex-col md:items-center p-4 md:p-0 mt-4 md:flex-row md:space-x-8 md:mt-0 font-medium">
+        <li><a routerLink="/" routerLinkActive="text-indigo-600"
+            class="block py-2 text-slate-600 hover:text-indigo-600 transition-colors">Home</a></li>
+        <li><a routerLink="/projects" routerLinkActive="text-indigo-600"
+            class="block py-2 text-slate-600 hover:text-indigo-600 transition-colors">Projects</a></li>
+        <li><a routerLink="/about" routerLinkActive="text-indigo-600"
+            class="block py-2 text-slate-600 hover:text-indigo-600 transition-colors">About</a></li>
+        <li>
+          <a routerLink="/contact"
+            class="mt-2 md:mt-0 inline-block px-6 py-2.5 bg-indigo-600 text-white font-semibold rounded-full shadow-md shadow-indigo-200 hover:bg-indigo-700 hover:-translate-y-0.5 transition-all active:scale-95">
+            Let's Talk
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
