@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
 })
 export class NavbarComponent {
   isMenuHidden = true;
+  title = "Portfolio";
 
    toggleMenu() {
     this.isMenuHidden = !this.isMenuHidden;
