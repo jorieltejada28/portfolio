@@ -1,14 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-profile',
-  standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
 })
 export class ProfileComponent {
-  
+
   profilePicture = '/assets/pictures/profile.jpg';
   fullName = 'Joriel Tejada';
   role = 'Full-Stack Web Developer';

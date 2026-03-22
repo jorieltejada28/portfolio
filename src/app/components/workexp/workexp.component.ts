@@ -1,8 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-workexp',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './workexp.component.html',
   styleUrl: './workexp.component.css',
 })

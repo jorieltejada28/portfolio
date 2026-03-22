@@ -15,8 +15,11 @@
     <div [class.hidden]="isMenuHidden" class="w-full md:block md:w-auto">
       <ul class="flex flex-col md:items-center p-4 md:p-0 mt-4 md:flex-row md:space-x-8 md:mt-0 font-medium">
         @for (link of links; track link.title) {
-        <li><a routerLink="{{ link.path }}" routerLinkActive="text-indigo-600"
-            class="block py-2 text-slate-600 hover:text-indigo-600 transition-colors">{{ link.title }}</a></li>
+          <li>
+            <a routerLink="{{ link.path }}" routerLinkActive="text-indigo-600"
+              class="block py-2 text-slate-600 hover:text-indigo-600 transition-colors">{{ link.title }}
+            </a>
+          </li>
         }
       </ul>
     </div>
