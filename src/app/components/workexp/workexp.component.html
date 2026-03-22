@@ -3,22 +3,31 @@
     <h3 class="text-sm font-bold text-indigo-200 uppercase tracking-widest mb-12">Experience Path</h3>
 
     <div class="relative border-l-2 border-white/20 ml-4 md:ml-0">
-      @for (exp of experiences; track exp.company) {
+      @for (exp of experiences; track $index) {
       <div class="mb-10 ml-8 relative">
 
         <div
-          class="absolute -left-10.5 top-1 w-5 h-5 bg-white border-4 border-indigo-400 rounded-full shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+          class="absolute -left-10.5 top-1 w-5 h-5 rounded-full shadow-[0_0_15px_rgba(255,255,255,0.3)] border-4 transition-colors duration-500"
+          [ngClass]="exp.period.includes('Present')
+            ? 'bg-emerald-400 border-emerald-200 shadow-emerald-500/50'
+            : 'bg-white border-indigo-400'">
+
+          @if (exp.period.includes('Present')) {
+          <div class="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-75"></div>
+          }
         </div>
 
         <div
           class="p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 shadow-xl hover:bg-white/15 transition-all group">
-
           <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-2">
             <div>
               <h4 class="text-xl font-bold text-white">{{ exp.role }}</h4>
               <p class="text-indigo-200 font-semibold">{{ exp.company }}</p>
             </div>
-            <span class="px-4 py-1 bg-white text-indigo-700 text-sm font-bold rounded-full w-fit">
+
+            <span class="px-4 py-1 text-sm font-bold rounded-full w-fit transition-colors" [ngClass]="exp.period.includes('Present')
+                ? 'bg-emerald-400 text-emerald-950'
+                : 'bg-white text-indigo-700'">
               {{ exp.period }}
             </span>
           </div>
