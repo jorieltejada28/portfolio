@@ -1,8 +1,9 @@
 <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-indigo-100 shadow-sm">
   <div class="max-w-7xl flex flex-wrap items-center justify-between mx-auto p-4">
-    <a routerLink="/" class="flex items-center space-x-2">
-      <span class="self-center text-xl font-bold whitespace-nowrap text-slate-900">
-        <span class="text-indigo-600">{{ title }}</span>
+    <a routerLink="/" class="flex items-center space-x-2 group">
+      <span
+        class="self-center text-3xl md:text-4xl font-black whitespace-nowrap tracking-tighter text-slate-900 transition-transform hover:scale-105">
+        <span class="text-indigo-600 inline-block drop-shadow-sm">{{ title }}</span>
       </span>
     </a>
 
@@ -15,11 +16,11 @@
     <div [class.hidden]="isMenuHidden" class="w-full md:block md:w-auto">
       <ul class="flex flex-col md:items-center p-4 md:p-0 mt-4 md:flex-row md:space-x-8 md:mt-0 font-medium">
         @for (link of links; track link.title) {
-          <li>
-            <a routerLink="{{ link.path }}" routerLinkActive="text-indigo-600"
-              class="block py-2 text-slate-600 hover:text-indigo-600 transition-colors">{{ link.title }}
-            </a>
-          </li>
+        <li>
+          <a routerLink="{{ link.path }}" routerLinkActive="text-indigo-600"
+            class="block py-2 text-slate-600 hover:text-indigo-600 transition-colors">{{ link.title }}
+          </a>
+        </li>
         }
       </ul>
     </div>
