@@ -9,32 +9,111 @@
       </h2>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      @for (cert of certificates; track $index) {
-      <div (click)="openModal(cert.image)"
-        class="group cursor-pointer relative overflow-hidden rounded-2xl bg-white border border-slate-200 shadow-sm transition-all hover:shadow-md hover:-translate-y-1">
+    <div class="relative mx-auto w-full max-w-7xl px-4 py-8">
+      @if (certificates.length > 0) {
+      <div
+        class="group relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-2xl backdrop-blur-xl"
+        (mouseenter)="pauseSlideshow()" (mouseleave)="resumeSlideshow()" (focusin)="pauseSlideshow()"
+        (focusout)="resumeSlideshow()">
 
-        <div class="aspect-4/3 overflow-hidden bg-slate-100">
-          <img [src]="cert.image" [alt]="cert.title"
-            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-
-          <div
-            class="absolute inset-0 bg-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-4 backdrop-blur-[1px]">
-            <span
-              class="text-indigo-700 text-xs font-bold bg-white/90 px-4 py-2 rounded-full shadow-sm border border-indigo-100">
-              View Full Certificate
-            </span>
+        <!-- Header / Branding Bar -->
+        <div class="flex items-center justify-between border-b border-slate-100 px-6 py-4 bg-slate-50/50">
+          <div>
+            <p class="text-xs font-extrabold uppercase tracking-[0.25em] text-indigo-600">
+              Professional Development
+            </p>
+            <h3 class="text-base font-bold text-slate-900 sm:text-lg">
+              {{ certificates[currentCertificateIndex].title }}
+            </h3>
           </div>
+          <span class="rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600">
+            {{ currentCertificateIndex + 1 }} of {{ certificates.length }}
+          </span>
         </div>
 
-        <div class="p-5 border-t border-slate-100">
-          <p class="text-slate-600 text-[10px] font-bold uppercase tracking-wider leading-relaxed">
-            {{ cert.title }}
-          </p>
+        <!-- Certificate Carousel Stage -->
+        <div
+          class="relative min-h-[420px] overflow-hidden bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 py-12 sm:min-h-[560px]">
+
+          <!-- Ambient Glow Backdrop -->
+          <div
+            class="pointer-events-none absolute left-1/2 top-1/2 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-600/20 blur-[120px]">
+          </div>
+
+          <!-- Sliding Track -->
+          <div class="relative h-[340px] w-full overflow-hidden sm:h-[460px]">
+            @for (cert of certificates; track cert.image; let i = $index) {
+            <div class="cert-slide absolute left-1/2 top-1/2 w-[78%] max-w-2xl cursor-pointer"
+              [ngStyle]="getSlideStyle(i)" [attr.aria-hidden]="i !== currentCertificateIndex" (click)="onSlideClick(i)">
+
+              <div
+                class="group/item relative overflow-hidden rounded-2xl border border-white/20 bg-white/5 p-2 shadow-2xl backdrop-blur-md">
+                <img [src]="cert.image" [alt]="cert.title"
+                  class="pointer-events-none max-h-[50vh] w-full object-contain" />
+
+                @if (i === currentCertificateIndex) {
+                <div
+                  class="absolute bottom-4 right-4 flex items-center gap-1.5 rounded-full bg-black/60 px-3 py-1.5 text-xs font-medium text-white opacity-0 backdrop-blur-md transition-opacity group-hover/item:opacity-100">
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                  </svg>
+                  Click to Zoom
+                </div>
+                }
+              </div>
+            </div>
+            }
+          </div>
+
+          <!-- Navigation Arrows -->
+          <button type="button" (click)="previousCertificate()" aria-label="Previous certificate"
+            class="absolute left-4 top-1/2 z-40 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-xl backdrop-blur-md transition-all hover:scale-110 hover:bg-indigo-600 sm:left-8">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m15 19-7-7 7-7" />
+            </svg>
+          </button>
+
+          <button type="button" (click)="nextCertificate()" aria-label="Next certificate"
+            class="absolute right-4 top-1/2 z-40 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white shadow-xl backdrop-blur-md transition-all hover:scale-110 hover:bg-indigo-600 sm:right-8">
+            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="m9 5 7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Footer Controls & Indicators -->
+        <div
+          class="flex flex-col gap-4 border-t border-slate-100 bg-white p-6 sm:flex-row sm:items-center sm:justify-between">
+
+          <!-- Slide Indicators -->
+          <div class="flex flex-wrap items-center gap-2">
+            @for (cert of certificates; track $index) {
+            <button type="button" (click)="goToCertificate($index)"
+              [attr.aria-label]="'Show certificate ' + ($index + 1)"
+              [attr.aria-current]="currentCertificateIndex === $index ? 'true' : null"
+              class="h-2 rounded-full transition-all duration-300" [ngClass]="currentCertificateIndex === $index
+        ? 'w-10 bg-indigo-600 shadow-md shadow-indigo-200'
+        : 'w-2 bg-slate-200 hover:bg-indigo-300'">
+            </button>
+            }
+          </div>
+
+          <!-- Play/Pause Status Info -->
+          <div class="text-xs font-semibold text-slate-400 flex items-center gap-2">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"
+                [class.hidden]="!isSlideshowPlaying"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2"
+                [ngClass]="isSlideshowPlaying ? 'bg-indigo-600' : 'bg-slate-400'"></span>
+            </span>
+            {{ isSlideshowPlaying ? 'Auto-playing (3s)' : 'Paused' }}
+          </div>
         </div>
       </div>
       }
     </div>
+
   </div>
 </div>
 

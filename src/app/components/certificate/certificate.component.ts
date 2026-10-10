@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -7,7 +7,99 @@ import { CommonModule } from '@angular/common';
   templateUrl: './certificate.component.html',
   styleUrl: './certificate.component.css'
 })
-export class CertificateComponent {
+export class CertificateComponent implements OnInit, OnDestroy {
+  currentCertificateIndex = 0;
+  isSlideshowPlaying = true;
+
+  private slideshowInterval?: ReturnType<typeof setInterval>;
+  private readonly slideDuration = 3000;
+
+  ngOnInit(): void {
+    this.startSlideshow();
+  }
+
+  ngOnDestroy(): void {
+    this.stopSlideshow();
+  }
+
+  startSlideshow(): void {
+    this.stopSlideshow();
+    if (this.certificates.length < 2) return;
+
+    this.isSlideshowPlaying = true;
+    this.slideshowInterval = setInterval(() => {
+      this.nextCertificate();
+    }, this.slideDuration);
+  }
+
+  stopSlideshow(): void {
+    if (this.slideshowInterval) {
+      clearInterval(this.slideshowInterval);
+      this.slideshowInterval = undefined;
+    }
+    this.isSlideshowPlaying = false;
+  }
+
+  pauseSlideshow(): void {
+    this.stopSlideshow();
+  }
+
+  resumeSlideshow(): void {
+    if (!this.isSlideshowPlaying) {
+      this.startSlideshow();
+    }
+  }
+
+  nextCertificate(): void {
+    if (this.certificates.length < 2) return;
+    this.currentCertificateIndex =
+      (this.currentCertificateIndex + 1) % this.certificates.length;
+  }
+
+  previousCertificate(): void {
+    if (this.certificates.length < 2) return;
+    this.currentCertificateIndex =
+      (this.currentCertificateIndex - 1 + this.certificates.length) %
+      this.certificates.length;
+  }
+
+  goToCertificate(index: number): void {
+    if (index < 0 || index >= this.certificates.length) return;
+    this.currentCertificateIndex = index;
+  }
+
+  /** Circular offset of a slide relative to the current one (-2..2) */
+  private getOffset(index: number): number {
+    const n = this.certificates.length;
+    let d = (((index - this.currentCertificateIndex) % n) + n) % n;
+    if (d > n / 2) d -= n;
+    return Math.max(-2, Math.min(2, d));
+  }
+
+  getSlideStyle(index: number): Record<string, string> {
+    const d = this.getOffset(index);
+    const abs = Math.abs(d);
+
+    const scale = abs === 0 ? 1 : 0.85;
+    const opacity = abs === 0 ? 1 : abs === 1 ? 0.4 : 0;
+    const blur = abs === 0 ? '0px' : '1px';
+
+    return {
+      transform: `translate(calc(-50% + ${d * 90}%), -50%) scale(${scale})`,
+      opacity: String(opacity),
+      filter: `blur(${blur})`,
+      zIndex: abs === 0 ? '30' : '10',
+      pointerEvents: abs > 1 ? 'none' : 'auto',
+    };
+  }
+
+  onSlideClick(index: number): void {
+    const d = this.getOffset(index);
+    if (d === 0) this.openModal(this.certificates[index].image);
+    else if (d === -1) this.previousCertificate();
+    else if (d === 1) this.nextCertificate();
+  }
+
   certificates = [
     { title: 'College Diploma of Bachelor of Information Technology', image: 'assets/certificates/cert1.jpg' },
     { title: 'Certificate of Degree in Bachelor of Information Technology', image: 'assets/certificates/cert2.jpg' },
@@ -22,13 +114,13 @@ export class CertificateComponent {
     { title: 'Certificate of WGP Workshop Refuel', image: 'assets/certificates/cert11.jpg' },
     { title: 'Certificate of WGP Workshop Performance Review and Evaluation', image: 'assets/certificates/cert12.jpg' },
     { title: 'Certificate of Cybersecurity Awareness Campaign Webinar Series', image: 'assets/certificates/cert13.jpg' },
+    { title: 'Walang Gutom Program (WGP) Information Technology (IT) Systems and Database Conferencce', image: 'assets/certificates/cert14.jpg' },
   ];
 
   selectedImg: string | null = null;
 
   @HostListener('document:keydown.escape', ['$event'])
-  handleKeyboardEvent(event: any) { // Use any or KeyboardEvent
-    const kbEvent = event as KeyboardEvent;
+  handleKeyboardEvent(event: Event) {
     if (this.selectedImg) {
       this.closeModal();
     }
@@ -36,13 +128,11 @@ export class CertificateComponent {
 
   openModal(img: string) {
     this.selectedImg = img;
-    // Disables background scrolling
     document.body.style.overflow = 'hidden';
   }
 
   closeModal() {
     this.selectedImg = null;
-    // Re-enables background scrolling
     document.body.style.overflow = 'auto';
   }
 }
