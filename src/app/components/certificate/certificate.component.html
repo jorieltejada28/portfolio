@@ -33,7 +33,7 @@
 
         <!-- Certificate Carousel Stage -->
         <div
-          class="relative min-h-[420px] overflow-hidden bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 py-12 sm:min-h-[560px]">
+          class="relative min-h-105 overflow-hidden bg-linear-to-br from-slate-900 via-indigo-950 to-slate-900 py-12 `sm:min-h-140`">
 
           <!-- Ambient Glow Backdrop -->
           <div
@@ -41,7 +41,7 @@
           </div>
 
           <!-- Sliding Track -->
-          <div class="relative h-[340px] w-full overflow-hidden sm:h-[460px]">
+          <div class="relative h-85 w-full overflow-hidden sm:h-115">
             @for (cert of certificates; track cert.image; let i = $index) {
             <div class="cert-slide absolute left-1/2 top-1/2 w-[78%] max-w-2xl cursor-pointer"
               [ngStyle]="getSlideStyle(i)" [attr.aria-hidden]="i !== currentCertificateIndex" (click)="onSlideClick(i)">
