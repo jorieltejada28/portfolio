@@ -1,0 +1,42 @@
+<div class="bg-indigo-600 my-12 py-16 px-6 shadow-2xl shadow-indigo-200">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      @for (photo of portfolio; track photo.image) {
+      <div class="flex flex-col overflow-hidden rounded-2xl border border-white/20 bg-white/10 shadow-xl">
+        <button type="button" (click)="openModal(photo.image)" [attr.aria-label]="'View ' + photo.title"
+          class="group/img relative block cursor-zoom-in overflow-hidden">
+          <img [src]="photo.image" [alt]="photo.title" loading="lazy"
+            class="aspect-[16/10] w-full object-cover object-top transition-transform duration-500 group-hover/img:scale-105" />
+          <span
+            class="absolute bottom-3 right-3 rounded-full bg-black/60 px-3 py-1 text-xs font-medium text-white opacity-0 backdrop-blur-md transition-opacity group-hover/img:opacity-100">
+            Click to Zoom
+          </span>
+        </button>
+        <div class="flex flex-1 flex-col gap-1 p-4">
+          <h4 class="text-sm font-bold text-white sm:text-base">{{ photo.title }}</h4>
+          <p class="text-xs leading-relaxed text-indigo-100 sm:text-sm">{{ photo.description }}</p>
+
+          <div class="mt-auto flex flex-wrap gap-1.5 pt-3">
+            @for (t of photo.tech; track t) {
+            <span class="rounded-full bg-white/15 px-2.5 py-0.5 text-[11px] font-semibold text-white">{{ t }}</span>
+            }
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</div>
+
+<!-- Image Modal (add once, anywhere in this component's template) -->
+@if (selectedImg) {
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm" (click)="closeModal()"
+  role="dialog" aria-modal="true">
+  <button type="button" (click)="closeModal()" aria-label="Close"
+    class="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-xl text-white hover:bg-indigo-600">
+    &times;
+  </button>
+  <img [src]="selectedImg" alt="Enlarged view" class="max-h-[90vh] max-w-[95vw] rounded-xl object-contain shadow-2xl"
+    (click)="$event.stopPropagation()" />
+</div>
+}
