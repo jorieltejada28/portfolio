@@ -81,4 +81,7 @@ export class ProfileComponent {
       iconPath: 'M4 7v10c0 2 1 3 3 3h10c2 0 3-1 3-3V7c0-2-1-3-3-3H7c-2 0-3 1-3 3zM9 11h6M9 15h6'
     }
   ];
+
+  resumeURL = '/assets/resume/updated resume.pdf';
+  resumeFileName = 'Joriel-Tejada-Resume.pdf';
 }

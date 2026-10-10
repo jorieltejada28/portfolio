@@ -42,10 +42,10 @@
       </div>
 
       <div class="mt-10 flex flex-wrap gap-4">
-        <button
-          class="px-6 py-3 bg-indigo-600 text-white font-bold rounded-xl shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition-all">
+        <a [href]="resumeURL" [download]="resumeFileName"
+          class="inline-block px-6 py-3 bg-indigo-600 text-white font-bold rounded-xl shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition-all">
           Download Resume
-        </button>
+        </a>
       </div>
     </div>
   </div>
