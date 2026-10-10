@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
 })
 export class ProfileComponent {
 
-  profilePicture = '/assets/pictures/profile.jpg';
+  profilePicture = '/assets/pictures/manuelquezon.jpg';
   fullName = 'Joriel Tejada';
   role = 'Full-Stack Web Developer';
   email = 'jorieltejada84@gmail.com';
