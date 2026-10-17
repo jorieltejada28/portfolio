@@ -21,7 +21,7 @@ export class WorkexpComponent {
         'Developed self-service partner portals and QR-based attendance tracking systems to streamline field operations.',
         'Collaborated across teams to ensure high availability, clean database design, and responsive interfaces.',
       ],
-      technologies: ['Angular', 'Laravel', 'Node.js', 'Express.js', 'TypeScript', 'Tailwind CSS', 'MySQL'],
+      technologies: ['Angular', 'Ionic', 'Laravel', 'Node.js', 'Express.js', 'TypeScript', 'Tailwind CSS', 'MySQL'],
     },
   ];
 }

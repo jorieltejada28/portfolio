@@ -70,7 +70,7 @@ export class ProfileComponent {
       title: 'Frontend & Mobile',
       description:
         'Building responsive, accessible user interfaces and cross-platform mobile experiences.',
-      tags: ['Angular', 'TypeScript', 'Tailwind CSS', 'RxJS', 'DaisyUI'],
+      tags: ['Angular', 'Ionic', 'TypeScript', 'Tailwind CSS', 'RxJS', 'DaisyUI'],
       iconPath:
         'M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z',
     },
