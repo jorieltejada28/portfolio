@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { PortfolioItem } from '../../interfaces/PortfolioItem';
 
 @Component({
   selector: 'app-portfolio',
@@ -8,65 +9,72 @@ import { CommonModule } from '@angular/common';
   styleUrl: './portfolio.component.css',
 })
 export class PortfolioComponent {
-  selectedImg: string | null = null;
+  selectedProject: PortfolioItem | null = null;
 
-  portfolio = [
+  portfolio: PortfolioItem[] = [
     {
       title: 'JVD Travel and Tour Human Resource System',
-      description: 'Human Resource System is a web application that provides a platform for managing the employees information.',
+      description:
+        'A centralized Human Resource management platform designed to streamline employee records, profiling, and workforce administration.',
       image: 'assets/portfolio/JVD.png',
-      tech: ['Laravel', 'Tailwind CSS', 'TensorFlow.js', 'MySQL']
+      tech: ['Laravel', 'Tailwind CSS', 'TensorFlow.js', 'MySQL'],
     },
     {
       title: 'Movers Logistics',
-      description: 'Logistics Movers is a web application that provides services to monitor and manage the delivery of goods.',
+      description:
+        'An end-to-end logistics management application built to monitor, dispatch, and track the delivery of goods in real time.',
       image: 'assets/portfolio/Movers.png',
-      tech: ['Laravel', 'Tailwind CSS', 'Daisy UI', 'MySQL']
+      tech: ['Laravel', 'Tailwind CSS', 'DaisyUI', 'MySQL'],
     },
     {
       title: 'Complaint Resolution System',
-      description: 'Complaint Resolution System is a web application that provides a platform for managing complaints and resolutions.',
+      description:
+        'A structured ticketing and case-tracking web application for logging, managing, and resolving user complaints efficiently.',
       image: 'assets/portfolio/CRS.png',
-      tech: ['Laravel', 'Tailwind CSS', 'MySQL']
+      tech: ['Laravel', 'Tailwind CSS', 'MySQL'],
     },
     {
       title: 'Integrated Walang Gutom Management System',
-      description: 'Internal enterprise platform developed to automate intake, schedule distribution, and real-time monitoring for the Foodstamp Program.',
+      description:
+        'Internal enterprise platform developed to automate beneficiary intake, schedule distribution, and real-time monitoring for the Food Stamp Program.',
       image: 'assets/portfolio/iwgms.png',
-      tech: ['Angular', 'Express Ts', 'Tailwind CSS', 'Daisy UI', 'MySQL']
+      tech: ['Angular', 'Express.js', 'TypeScript', 'Tailwind CSS', 'DaisyUI', 'MySQL'],
     },
     {
       title: 'Walang Gutom Program Revive System',
-      description: 'Internal enterprise platform developed to a real-time monitoring for the Foodstamp Program Revive.',
+      description:
+        'Internal enterprise dashboard engineered for real-time program tracking and operational monitoring under the Food Stamp Program Revive initiative.',
       image: 'assets/portfolio/revive.png',
-      tech: ['Angular', 'Express Ts', 'Tailwind CSS', 'MySQL']
+      tech: ['Angular', 'Express.js', 'TypeScript', 'Tailwind CSS', 'MySQL'],
     },
     {
       title: 'Retailer Application Portal',
-      description: 'A web-based self-service portal that streamlines business registration, application submission, and status tracking for partner retailers.',
+      description:
+        'A self-service web portal that streamlines business registration, document submission, and real-time application status tracking for partner retailers.',
       image: 'assets/portfolio/rap.png',
-      tech: ['Angular', 'Express Ts', 'Tailwind CSS', 'Daisy UI', 'MySQL']
+      tech: ['Angular', 'Express.js', 'TypeScript', 'Tailwind CSS', 'DaisyUI', 'MySQL'],
     },
     {
       title: 'WGP Attendance Monitoring System',
-      description: 'A web-based attendance monitoring system that scans QR codes and automatically stores each attendance record in the database.',
+      description:
+        'A QR code–powered attendance tracking web application that scans participant badges and automatically logs verified records into the database.',
       image: 'assets/portfolio/attendance.png',
-      tech: ['Angular', 'Express Ts', 'Tailwind CSS', 'MySQL']
+      tech: ['Angular', 'Express.js', 'TypeScript', 'Tailwind CSS', 'MySQL'],
     },
   ];
 
   @HostListener('document:keydown.escape')
-  handleEscape() {
-    if (this.selectedImg) this.closeModal();
+  handleEscape(): void {
+    if (this.selectedProject) this.closeModal();
   }
 
-  openModal(img: string) {
-    this.selectedImg = img;
+  openModal(project: PortfolioItem): void {
+    this.selectedProject = project;
     document.body.style.overflow = 'hidden';
   }
 
-  closeModal() {
-    this.selectedImg = null;
+  closeModal(): void {
+    this.selectedProject = null;
     document.body.style.overflow = 'auto';
   }
 }

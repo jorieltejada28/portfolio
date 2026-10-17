@@ -1,52 +1,124 @@
-<div class="bg-indigo-600 my-12 py-16 px-6 shadow-2xl shadow-indigo-200">
-  <div class="max-w-4xl mx-auto">
-    <h3 class="text-sm font-bold text-indigo-200 uppercase tracking-widest mb-12">Experience Path</h3>
+<section class="max-w-6xl mx-auto py-16 px-6 border-t border-slate-200/70">
 
-    <div class="relative border-l-2 border-white/20 ml-4 md:ml-0">
-      @for (exp of experiences; track $index) {
-      <div class="mb-10 ml-8 relative">
+  <div class="flex flex-col md:flex-row gap-12 lg:gap-16 items-start">
 
-        <div
-          class="absolute -left-10.5 top-1 w-5 h-5 rounded-full shadow-[0_0_15px_rgba(255,255,255,0.3)] border-4 transition-colors duration-500"
-          [ngClass]="exp.period.includes('Present')
-            ? 'bg-emerald-400 border-emerald-200 shadow-emerald-500/50'
-            : 'bg-white border-indigo-400'">
+    <!-- Left Column: Section Title (Matches Profile & Skills md:w-72 Spine) -->
+    <div class="w-full md:w-72 shrink-0 md:sticky md:top-8">
+      <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest block mb-2">
+        Career Journey
+      </span>
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-3">
+        Work Experience
+      </h2>
+      <p class="text-sm text-slate-500 leading-relaxed">
+        Professional roles where I’ve engineered enterprise systems and scalable public-sector web applications.
+      </p>
+    </div>
 
-          @if (exp.period.includes('Present')) {
-          <div class="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-75"></div>
-          }
-        </div>
+    <!-- Right Column: Interactive Timeline -->
+    <div class="flex-1 w-full">
+      <div class="relative border-l-2 border-indigo-100 ml-3 sm:ml-4 space-y-10">
 
-        <div
-          class="p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/10 shadow-xl hover:bg-white/15 transition-all group">
-          <div class="flex flex-col md:flex-row md:items-center justify-between mb-4 gap-2">
-            <div>
-              <h4 class="text-xl font-bold text-white">{{ exp.role }}</h4>
-              <p class="text-indigo-200 font-semibold">{{ exp.company }}</p>
-            </div>
+        @for (exp of experiences; track $index) {
+        <div class="relative pl-8 sm:pl-10 group">
 
-            <span class="px-4 py-1 text-sm font-bold rounded-full w-fit transition-colors" [ngClass]="exp.period.includes('Present')
-                ? 'bg-emerald-400 text-emerald-950'
-                : 'bg-white text-indigo-700'">
-              {{ exp.period }}
-            </span>
-          </div>
-
-          <p class="text-indigo-50 leading-relaxed mb-6">
-            {{ exp.description }}
-          </p>
-
-          <div class="flex flex-wrap gap-2">
-            @for (tech of exp.technologies; track tech) {
-            <span
-              class="text-xs font-medium px-2.5 py-0.5 rounded bg-white/10 text-white border border-white/20 group-hover:border-white/40">
-              {{ tech }}
-            </span>
+          <!-- Timeline Node (Pulsing Emerald if 'Present', Indigo otherwise) -->
+          <div class="absolute -left-[11px] top-1.5 w-5 h-5 rounded-full border-4 bg-white transition-all duration-300"
+            [ngClass]="exp.period.includes('Present')
+                ? 'border-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.45)]'
+                : 'border-indigo-400 group-hover:border-indigo-600'">
+            @if (exp.period.includes('Present')) {
+            <span class="absolute -inset-1 rounded-full bg-emerald-400 animate-ping opacity-60"></span>
             }
           </div>
+
+          <!-- Experience Card -->
+          <div
+            class="relative p-6 sm:p-8 rounded-3xl bg-white border border-slate-200/80 shadow-sm hover:shadow-xl hover:shadow-indigo-500/5 hover:border-indigo-200 transition-all duration-300">
+
+            <!-- Subtle Top Accent Bar for Active Role -->
+            @if (exp.period.includes('Present')) {
+            <div
+              class="absolute inset-x-0 top-0 h-1 rounded-t-3xl bg-gradient-to-r from-indigo-600 via-indigo-500 to-emerald-500">
+            </div>
+            }
+
+            <!-- Card Header: Role, Company & Date Badge -->
+            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-5">
+              <div class="flex items-start gap-4">
+                <!-- Building / Organization Icon Box -->
+                <div
+                  class="hidden sm:flex w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-100 items-center justify-center text-indigo-600 shrink-0 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                </div>
+
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-1">
+                    <h3 class="text-xl font-extrabold text-slate-900 group-hover:text-indigo-600 transition-colors">
+                      {{ exp.role }}
+                    </h3>
+                  </div>
+                  <p class="text-sm sm:text-base font-semibold text-indigo-600">
+                    {{ exp.company }}
+                  </p>
+                </div>
+              </div>
+
+              <!-- Period Pill Badge -->
+              <span class="inline-flex items-center gap-2 px-3.5 py-1.5 text-xs font-bold rounded-full w-fit shrink-0"
+                [ngClass]="exp.period.includes('Present')
+                    ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                    : 'bg-slate-100 text-slate-600 border border-slate-200'">
+                @if (exp.period.includes('Present')) {
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                }
+                {{ exp.period }}
+              </span>
+            </div>
+
+            <!-- Summary Description -->
+            <p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-5">
+              {{ exp.description }}
+            </p>
+
+            <!-- Optional Key Contributions / Highlights List -->
+            @if (exp.highlights && exp.highlights.length > 0) {
+            <ul class="space-y-2.5 mb-6 pt-4 border-t border-slate-100 text-sm text-slate-600">
+              @for (point of exp.highlights; track point) {
+              <li class="flex items-start gap-2.5">
+                <svg class="w-4 h-4 text-indigo-500 mt-1 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                <span>{{ point }}</span>
+              </li>
+              }
+            </ul>
+            }
+
+            <!-- Technologies Used -->
+            <div class="pt-4 border-t border-slate-100 flex flex-wrap items-center gap-2">
+              <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mr-1">
+                Stack:
+              </span>
+              @for (tech of exp.technologies; track tech) {
+              <span
+                class="text-xs font-semibold px-3 py-1 rounded-lg bg-slate-50 text-slate-700 border border-slate-200/80 group-hover:border-indigo-200 group-hover:bg-indigo-50/50 group-hover:text-indigo-600 transition-colors">
+                {{ tech }}
+              </span>
+              }
+            </div>
+
+          </div>
         </div>
+        }
+
       </div>
-      }
     </div>
+
   </div>
-</div>
+
+</section>

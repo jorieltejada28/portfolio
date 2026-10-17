@@ -11,3 +11,17 @@
     transition: opacity 200ms linear;
   }
 }
+
+/* Clean horizontal scroll for the thumbnail dock */
+.no-scrollbar::-webkit-scrollbar {
+  height: 4px;
+}
+
+.no-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.no-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}

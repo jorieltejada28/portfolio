@@ -1,42 +1,124 @@
-<div class="bg-indigo-600 my-12 py-16 px-6 shadow-2xl shadow-indigo-200">
-  <div class="max-w-7xl mx-auto">
-    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      @for (photo of portfolio; track photo.image) {
-      <div class="flex flex-col overflow-hidden rounded-2xl border border-white/20 bg-white/10 shadow-xl">
-        <button type="button" (click)="openModal(photo.image)" [attr.aria-label]="'View ' + photo.title"
-          class="group/img relative block cursor-zoom-in overflow-hidden">
-          <img [src]="photo.image" [alt]="photo.title" loading="lazy"
-            class="aspect-[16/10] w-full object-cover object-top transition-transform duration-500 group-hover/img:scale-105" />
-          <span
-            class="absolute bottom-3 right-3 rounded-full bg-black/60 px-3 py-1 text-xs font-medium text-white opacity-0 backdrop-blur-md transition-opacity group-hover/img:opacity-100">
-            Click to Zoom
-          </span>
-        </button>
-        <div class="flex flex-1 flex-col gap-1 p-4">
-          <h4 class="text-sm font-bold text-white sm:text-base">{{ photo.title }}</h4>
-          <p class="text-xs leading-relaxed text-indigo-100 sm:text-sm">{{ photo.description }}</p>
+<section class="max-w-6xl mx-auto py-16 px-6 border-t border-slate-200/70">
 
-          <div class="mt-auto flex flex-wrap gap-1.5 pt-3">
-            @for (t of photo.tech; track t) {
-            <span class="rounded-full bg-white/15 px-2.5 py-0.5 text-[11px] font-semibold text-white">{{ t }}</span>
-            }
-          </div>
-        </div>
-      </div>
-      }
+  <!-- Section Header (Matches Certificate & Profile Spine) -->
+  <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+    <div>
+      <span class="text-xs font-bold text-indigo-600 uppercase tracking-widest block mb-2">
+        Featured Work
+      </span>
+      <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">
+        Projects & Enterprise Systems
+      </h2>
+    </div>
+
+    <div class="flex items-center gap-2 self-start md:self-auto">
+      <span class="px-3.5 py-1.5 rounded-full bg-indigo-50 border border-indigo-100 text-xs font-bold text-indigo-600">
+        {{ portfolio.length }} Completed Systems
+      </span>
     </div>
   </div>
-</div>
 
-<!-- Image Modal (add once, anywhere in this component's template) -->
-@if (selectedImg) {
-<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm" (click)="closeModal()"
-  role="dialog" aria-modal="true">
-  <button type="button" (click)="closeModal()" aria-label="Close"
-    class="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-xl text-white hover:bg-indigo-600">
-    &times;
-  </button>
-  <img [src]="selectedImg" alt="Enlarged view" class="max-h-[90vh] max-w-[95vw] rounded-xl object-contain shadow-2xl"
-    (click)="$event.stopPropagation()" />
+  <!-- Projects Grid (3 Columns on Desktop so Web App Screenshots Shine) -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+    @for (project of portfolio; track project.image; let i = $index) {
+    <article
+      class="group flex flex-col overflow-hidden rounded-2xl bg-white border border-slate-200/80 shadow-sm hover:shadow-xl hover:shadow-indigo-500/10 hover:border-indigo-300 hover:-translate-y-1 transition-all duration-300">
+      <!-- Top Browser-Style Screenshot Frame -->
+      <div class="relative bg-slate-900 pt-6 px-3 pb-0 overflow-hidden border-b border-slate-100">
+        <!-- Subtle Browser Dots -->
+        <div class="absolute top-2.5 left-3.5 flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-rose-400/80"></span>
+          <span class="w-2 h-2 rounded-full bg-amber-400/80"></span>
+          <span class="w-2 h-2 rounded-full bg-emerald-400/80"></span>
+        </div>
+
+        <button type="button" (click)="openModal(project)" [attr.aria-label]="'Preview ' + project.title"
+          class="group/img relative block w-full cursor-zoom-in overflow-hidden rounded-t-lg shadow-lg">
+          <img [src]="project.image" [alt]="project.title" loading="lazy"
+            class="aspect-[16/10] w-full object-cover object-top transition-transform duration-500 group-hover:scale-105" />
+
+          <!-- Hover Overlay with Zoom Badge -->
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-end p-3">
+            <span
+              class="inline-flex items-center gap-1.5 rounded-full bg-slate-900/90 border border-white/15 px-3 py-1 text-xs font-medium text-white backdrop-blur-md shadow-lg">
+              <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" stroke="currentColor" stroke-width="2"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+              </svg>
+              Preview UI
+            </span>
+          </div>
+        </button>
+      </div>
+
+      <!-- Card Body -->
+      <div class="flex flex-1 flex-col p-6">
+        <h3 class="text-base font-bold text-slate-900 group-hover:text-indigo-600 transition-colors mb-2 line-clamp-1"
+          [title]="project.title">
+          {{ project.title }}
+        </h3>
+
+        <p class="text-sm leading-relaxed text-slate-500 mb-5 line-clamp-3">
+          {{ project.description }}
+        </p>
+
+        <!-- Tech Stack Pills -->
+        <div class="mt-auto pt-4 border-t border-slate-100 flex flex-wrap gap-1.5">
+          @for (t of project.tech; track t) {
+          <span
+            class="rounded-md bg-slate-50 border border-slate-200/80 px-2.5 py-1 text-[11px] font-semibold text-slate-600 group-hover:border-indigo-100 group-hover:bg-indigo-50/50 group-hover:text-indigo-600 transition-colors">
+            {{ t }}
+          </span>
+          }
+        </div>
+      </div>
+    </article>
+    }
+  </div>
+
+</section>
+
+<!-- ================= PROJECT LIGHTBOX MODAL ================= -->
+@if (selectedProject) {
+<div
+  class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-950/90 p-4 md:p-8 backdrop-blur-md animate-in fade-in duration-200"
+  (click)="closeModal()" role="dialog" aria-modal="true">
+  <!-- Modal Header Bar -->
+  <div class="w-full max-w-5xl flex items-center justify-between gap-4 mb-4 text-white"
+    (click)="$event.stopPropagation()">
+    <div class="min-w-0">
+      <h3 class="text-base sm:text-lg font-bold text-white truncate">
+        {{ selectedProject.title }}
+      </h3>
+      <div class="flex flex-wrap gap-1.5 mt-1">
+        @for (t of selectedProject.tech; track t) {
+        <span class="rounded bg-white/10 px-2 py-0.5 text-[11px] font-medium text-indigo-200">
+          {{ t }}
+        </span>
+        }
+      </div>
+    </div>
+
+    <button type="button" (click)="closeModal()" aria-label="Close preview"
+      class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/10 text-white hover:bg-indigo-600 transition-colors cursor-pointer">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Enlarged Screenshot -->
+  <div class="relative max-w-5xl w-full flex-1 flex items-center justify-center min-h-0"
+    (click)="$event.stopPropagation()">
+    <img [src]="selectedProject.image" [alt]="selectedProject.title"
+      class="max-h-[75vh] max-w-full rounded-xl object-contain shadow-2xl border border-white/10" />
+  </div>
+
+  <!-- Modal Caption -->
+  <p class="mt-4 max-w-3xl text-center text-xs sm:text-sm text-slate-300" (click)="$event.stopPropagation()">
+    {{ selectedProject.description }}
+  </p>
 </div>
 }
