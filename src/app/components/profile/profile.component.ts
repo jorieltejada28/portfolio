@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
   styleUrl: './profile.component.css',
 })
 export class ProfileComponent {
-  profilePicture = '/assets/pictures/manuelquezon.jpg';
+  profilePicture = 'assets/pictures/manuelquezon.jpg';
   fullName = 'Joriel Tejada';
   role = 'Full-Stack Developer';
   email = 'jorieltejada84@gmail.com';
@@ -92,6 +92,6 @@ export class ProfileComponent {
     },
   ];
 
-  resumeURL = '/assets/resume/updated resume.pdf';
+  resumeURL = 'assets/resume/updated resume.pdf';
   resumeFileName = 'Joriel_Tejada_Resume.pdf';
 }
