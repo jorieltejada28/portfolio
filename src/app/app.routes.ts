@@ -3,13 +3,13 @@ import { HomeComponent } from './pages/home/home.component';
 
 export const routes: Routes = [
   {
-    path: 'portfolio',
+    path: 'home',
     component: HomeComponent,
   },
 
   {
     path: '**',
-    redirectTo: 'portfolio',
+    redirectTo: 'home',
     pathMatch: 'full'
   }
 ];
